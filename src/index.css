@@ -1,40 +1,114 @@
-body {
+/* Full viewport size */
+html, body, #root, .app-container {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   background-color: #111;
   color: white;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden; /* no scrollbars */
   display: flex;
   flex-direction: column;
+}
+
+/* Header with title center and weather right */
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-h1 {
-  color: #4fa3f7;
-  margin-bottom: 20px;
-}
-
-.card {
+  height: 60px;
   background-color: #222;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 10px 0;
-  width: 80%;
-  max-width: 800px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  padding: 0 20px;
+  border-bottom: 1px solid #444;
+  flex-shrink: 0;
 }
 
-iframe {
-  border-radius: 12px;
+/* Weather on the right */
+.weather {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #4fa3f7;
+}
+
+/* Main content fills rest of screen */
+.main-content {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+/* YouTube fills entire main-content */
+.youtube-player {
   width: 100%;
-  height: 450px;
+  height: 100%;
   border: none;
+  border-radius: 0;
 }
 
-footer {
-  color: #888;
-  margin-top: auto;
+/* Messages container is absolute overlay */
+.messages-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* so clicks pass through */
+  overflow: visible;
+}
+
+/* Example message flying animation */
+.message-flyin {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 1.5rem;
+  color: #f1efef;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px black;
+  animation: flyIn 10s linear forwards;
+  /* Start off-screen left */
+  left: -100%;
+  top: 10%; /* you can randomize this in code if you want */
+}
+
+/* No messages text centered */
+.no-messages {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #f1efef;
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+/* Simple fly in animation from left to right */
+@keyframes flyIn {
+  from {
+    left: -100%;
+    opacity: 0;
+  }
+  to {
+    left: 110%;
+    opacity: 1;
+  }
+}
+
+/* Footer fixed height at bottom */
+.footer {
+  height: 30px;
+  text-align: center;
   font-size: 0.8rem;
-  padding: 10px;
+  color: #666;
+  background-color: #222;
+  flex-shrink: 0;
+  line-height: 30px;
 }

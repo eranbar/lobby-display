@@ -8,7 +8,7 @@ const MESSAGES_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-mess
 
 function App() {
   const [weather, setWeather] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(["נא לשמור על הניקיון!!!", "נא לא להחנות בחניית נכים"]);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -40,42 +40,45 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="app-container">
+    <header className="header">
       <h1>🏢 Lobby Display</h1>
-
-      <div className="card">
-        <iframe
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
-          title="YouTube player"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
+      <div className="weather">
+        🌤 {weather?.name} {weather?.sys.country} — {weather?.main.temp}°C, {weather?.weather[0]?.description}, feels like {weather?.main?.feels_like}°C
       </div>
-
-
-      <div className="card">
-        <h2>🌤 {weather?.name} {weather?.sys.country}</h2>
-        <p>
-          {weather?.main.temp}°C {weather?.weather[0]?.description}, feels like: {weather?.main?.feels_like}°C
-        </p>
-      </div>
-
-
-      <div className="card">
-        <h2>📢 Announcements</h2>
-        {messages.length > 0 ? (
-          <ul>
-            {messages.map((msg, i) => (
-              <li key={i}>{msg.text}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No messages right now.</p>
+    </header>
+  
+    <main className="main-content">
+      <iframe
+        className="youtube-player"
+        src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+        title="YouTube player"
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+      ></iframe>
+  
+      <div className="messages-overlay">
+        {messages.length > 0 ? 
+        messages.map((msg, i) => {
+          const top = 10 + (i * 15) % 80; // example top between 10% and 90%
+          const style = {
+            top: `${top}%`,
+            animationDelay: `${i * 3}s`,
+          };
+          return (
+            <div key={i} className="message-flyin" style={style}>
+              {msg}
+            </div>
+          );
+        }) : (
+          <p className="no-messages">No messages right now.</p>
         )}
       </div>
-
-      <footer>Auto-refreshes every 30 minutes</footer>
-    </div>
+    </main>
+  
+    <footer className="footer">Auto-refreshes every 30 minutes</footer>
+  </div>
+  
   );
 }
 
