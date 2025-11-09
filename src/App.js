@@ -85,8 +85,6 @@ function App() {
           </div>
         </div>
       </main>
-
-      <footer className="footer">Auto-refreshes every 30 minutes</footer>
     </div>
   );
 
