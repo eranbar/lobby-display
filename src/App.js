@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Building2 } from "lucide-react";
+
 
 const WEATHER_API_KEY = "9e49ced90a630f4dcffde933bd2872b5";
 const CITY = "Nahariya";
@@ -8,7 +10,7 @@ const MESSAGES_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-mess
 
 function App() {
   const [weather, setWeather] = useState(null);
-  const [messages, setMessages] = useState(["נא לשמור על הניקיון!!!", "נא לא להחנות בחניית נכים"]);
+  const [messages, setMessages] = useState(["נא לשמור על הניקיון!!!", "נא לא להחנות בחניית נכים", "jksdkjhjkshdsd", ",m,mzxnc,mzxchuyaiyuieryiuryruewryiureyui", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -39,47 +41,56 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // App.js (only the render part shown; keep your existing fetch/useEffect logic)
   return (
-    <div className="app-container">
-    <header className="header">
-      <h1>🏢 Lobby Display</h1>
-      <div className="weather">
-        🌤 {weather?.name} {weather?.sys.country} — {weather?.main.temp}°C, {weather?.weather[0]?.description}, feels like {weather?.main?.feels_like}°C
-      </div>
-    </header>
-  
-    <main className="main-content">
-      <iframe
-        className="youtube-player"
-        src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
-        title="YouTube player"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      ></iframe>
-  
-      <div className="messages-overlay">
-        {messages.length > 0 ? 
-        messages.map((msg, i) => {
-          const top = 10 + (i * 15) % 80; // example top between 10% and 90%
-          const style = {
-            top: `${top}%`,
-            animationDelay: `${i * 3}s`,
-          };
-          return (
-            <div key={i} className="message-flyin" style={style}>
-              {msg}
-            </div>
-          );
-        }) : (
-          <p className="no-messages">No messages right now.</p>
-        )}
-      </div>
-    </main>
-  
-    <footer className="footer">Auto-refreshes every 30 minutes</footer>
-  </div>
-  
+    <div className="app-root">
+      <header className="topbar">
+        <h1 className="title">
+          <Building2 className="icon" /> יחידה 101 בניין 12
+        </h1>
+        <div className="weather">
+          {weather ? (
+            <>
+              <div className="weather-city">🌤 {weather.name} {weather.sys?.country}</div>
+              <div className="weather-temp">{Math.round(weather.main.temp)}°C</div>
+              <div className="weather-desc">{weather.weather[0]?.description} · feels like {Math.round(weather.main.feels_like)}°C</div>
+            </>
+          ) : (
+            <div className="weather-loading">Loading weather...</div>
+          )}
+        </div>
+      </header>
+
+      <main className="stage">
+        <iframe
+          className="youtube-player"
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=0&loop=1&playlist=${YOUTUBE_VIDEO_ID}`}
+          title="YouTube player"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        />
+
+        {/* Message ticker overlay */}
+        <div className="ticker-wrap" aria-hidden="true">
+          <div
+            className="ticker-track"
+            style={{ "--ticker-speed": "36s" }} // adjust speed here (CSS var)
+          >
+            {/* duplicate messages to ensure seamless loop */}
+            {[...messages, ...messages].map((msg, idx) => (
+              <div key={idx} className="ticker-item">
+                {msg}
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      <footer className="footer">Auto-refreshes every 30 minutes</footer>
+    </div>
   );
+
+
 }
 
 export default App;
