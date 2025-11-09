@@ -10,7 +10,7 @@ const MESSAGES_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-mess
 
 function App() {
   const [weather, setWeather] = useState(null);
-  const [messages, setMessages] = useState(["נא לשמור על הניקיון!!!", "נא לא להחנות בחניית נכים", "jksdkjhjkshdsd", ",m,mzxnc,mzxchuyaiyuieryiuryruewryiureyui", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]);
+  const [messages, setMessages] = useState(["עופרי אני אוהב אותך", "נא לשמור על הניקיון!!!", "נא לא להחנות בחניית נכים", "jksdkjhjkshdsd", ",m,mzxnc,mzxchuyaiyuieryiuryruewryiureyui", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]);
 
   useEffect(() => {
     const fetchWeather = async () => {
