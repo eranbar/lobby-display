@@ -122,7 +122,7 @@ function App() {
               controls: 0,
               rel: 0,
               modestbranding: 1,
-              mute: 1
+              mute: 0
             }
           }}
           onEnd={handleVideoEnd}
