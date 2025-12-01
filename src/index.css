@@ -23,8 +23,6 @@ html, body, #root, .app-root {
 .topbar {
   height: 84px;
   display: flex;
-  align-items: center;
-  justify-content: center; /* centers the title */
   position: relative;
   padding: 0 28px;
   box-sizing: border-box;
@@ -32,6 +30,9 @@ html, body, #root, .app-root {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
   z-index: 40;
   flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .title {
@@ -45,7 +46,7 @@ html, body, #root, .app-root {
 
 /* Weather block sits top-right */
 .weather {
-  position: absolute;
+  position: relative;
   right: 24px;
   top: 50%;
   transform: translateY(-50%);

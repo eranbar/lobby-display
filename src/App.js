@@ -92,7 +92,9 @@ function App() {
   return (
     <div className="app-root">
       <header className="topbar">
-        <SignInButton />
+        <div style={{ "align-items": "left" }}>
+          <SignInButton />
+        </div>
         <h1 className="title">
           <Building2 className="icon" /> יחידה 101 בניין 12
         </h1>
@@ -120,7 +122,7 @@ function App() {
               controls: 0,
               rel: 0,
               modestbranding: 1,
-              mute: 0
+              mute: 1
             }
           }}
           onEnd={handleVideoEnd}
