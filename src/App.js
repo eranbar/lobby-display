@@ -15,12 +15,12 @@ const VIDEOS_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messag
 function App() {
   const [weather, setWeather] = useState(null);
   const [messages, setMessages] = useState([
-    "עופרי אני אוהב אותך",
-    "נא לשמור על הניקיון!!!",
-    "נא לא להחנות בחניית נכים",
-    "jksdkjhjkshdsd",
-    ",m,mzxnc,mzxchuyaiyuieryiuryruewryiureyui",
-    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"]);
+    "message 1",
+    "message 2 ",
+    "message 3",
+    "message 4",
+    "message 5",
+    "message 6"]);
 
   const [videos, setVideos] = useState([]); // default fallback
   const [currentVideo, setCurrentVideo] = useState('9Vti9E-TASg');
