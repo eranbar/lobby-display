@@ -5,8 +5,6 @@ import "../App.css";
 import "../index.css";
 
 const YOUTUBE_VIDEO_ID = "jsYjqmpzoxo";
-const YOUTUBE_API_KEY = "AIzaSyC9xkESuli1xSkyVNepQ_08gxcbpBxLER8";
-const YOUTUBE_DEV_API_KEY = "AIzaSyDHBnmZV_VtZajYz2dfxQaqXuwncCMBjSA";
 const CHANNEL_ID = "UC_x5XG1OV2P6uZZ5FSM9Ttw"; // example: Google Developers
 const VIDEOS_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messages/main/videos.json";
 
@@ -71,7 +69,7 @@ const YoutubeManager = ({ refreshTick }) => {
         const fetchVideos = async () => {
             try {
                 const res = await axios.get(
-                    `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`
+                    `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`
                 );
                 console.log("API response items:", res.data.items);
                 const videoIds = res.data.items.map(i => i.id.videoId).filter(Boolean);
