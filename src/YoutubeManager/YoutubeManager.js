@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
 import "../App.css";
@@ -64,7 +64,7 @@ const YoutubeManager = ({ refreshTick }) => {
     //const initRef = useRef(false);
 
     const [currentVideo, setCurrentVideo] = useState(""/* "9Vti9E-TASg" */);
-
+    const videosRef = useRef([]);
     useEffect(() => {
         const fetchVideos = async () => {
             try {
@@ -83,6 +83,7 @@ const YoutubeManager = ({ refreshTick }) => {
                 // 🔹 Update only if playlist changed
                 if (JSON.stringify(newVideos) !== JSON.stringify(videos)) {
                     console.log("Playlist updated");
+                    videosRef.current = newVideos;
                     setVideos(newVideos);
                 } else {
                     console.log("Playlist unchanged");
