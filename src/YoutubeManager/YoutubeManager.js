@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
 import "../App.css";
@@ -64,30 +64,37 @@ const YoutubeManager = ({ refreshTick }) => {
     //const initRef = useRef(false);
 
     const [currentVideo, setCurrentVideo] = useState(""/* "9Vti9E-TASg" */);
-    const videosRef = useRef([]);
+
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const mongoPlaylists = await axios.get("https://lobby-display-sh6g.onrender.com/playlists");
+                const mongoPlaylists = await axios.get(
+                    "https://lobby-display-sh6g.onrender.com/playlists"
+                );
 
                 let newVideos = [];
 
-                // in case no data in mongo db will retrieve it using youtube api.
                 if (mongoPlaylists.data.length > 0) {
                     newVideos = mongoPlaylists.data[0].videos;
                 } else {
-                    const res = await axios.get(`https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`);
+                    const res = await axios.get(
+                        `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`
+                    );
+
                     newVideos = res.data.items.map(v => v.id.videoId);
                 }
 
-                // 🔹 Update only if playlist changed
-                if (JSON.stringify(newVideos) !== JSON.stringify(videos)) {
-                    console.log("Playlist updated");
-                    videosRef.current = newVideos;
-                    setVideos(newVideos);
-                } else {
+                // 🔹 Compare with previous state safely
+                setVideos(prevVideos => {
+                    if (JSON.stringify(prevVideos) !== JSON.stringify(newVideos)) {
+                        console.log("Playlist updated");
+                        return newVideos;
+                    }
+
                     console.log("Playlist unchanged");
-                }
+                    return prevVideos;
+                });
+
             } catch (err) {
                 console.error("Videos fetch failed", err);
             }
