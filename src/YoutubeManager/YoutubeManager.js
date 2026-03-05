@@ -9,7 +9,7 @@ const CHANNEL_ID = "UC_x5XG1OV2P6uZZ5FSM9Ttw"; // example: Google Developers
 const VIDEOS_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messages/main/videos.json";
 
 const YoutubeManager = ({ refreshTick }) => {
-    const [videos, setVideos] = useState([
+/*     const [videos, setVideos] = useState([
         "9Vti9E-TASg",
         "9hFu79HXJGA",
         "gCYcHz2k5x0",
@@ -59,32 +59,34 @@ const YoutubeManager = ({ refreshTick }) => {
         "VmcRrr4TX74",
         "y_FkQ2jHd1c",
         "stqBS3m-3WE",
-        "9vMh9f41pqE"]); // default fallback
-
+        "9vMh9f41pqE"]); // default fallback */
+    const [videos, setVideos] = useState([]); // default fallback
     const initRef = useRef(false);
 
-    const [currentVideo, setCurrentVideo] = useState("9Vti9E-TASg");
+    const [currentVideo, setCurrentVideo] = useState(""/* "9Vti9E-TASg" */);
 
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const res = await axios.get(
+                const mongoPlaylists = await axios.get("https://lobby-display-sh6g.onrender.com:4000/playlists");
+                // in case no data in mongo db will retrieve it using youtube api.
+                const res = mongoPlaylists?? await axios.get(
                     `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`
                 );
-                console.log("API response items:", res.data.items);
-                const videoIds = res.data.items.map(i => i.id.videoId).filter(Boolean);
-                console.log("Extracted video IDs:", videoIds);
-                setVideos(videoIds);
+                //console.log("API response items:", res.data.items);
+                //const videoIds = res.data.videos.map(i => i).filter(Boolean);
+                //console.log("Extracted video IDs:", videoIds);
+                setVideos(res.data[0].videos);
             } catch (err) {
                 console.error("Videos fetch failed", err);
             }
         };
 
         // global initialization, should happen only once
-        if (!initRef.current) {
-            initRef.current = true;
-            //fetchVideos();
-        }
+        // if (!initRef.current) {
+        //     initRef.current = true;
+            fetchVideos();
+        //}
 
     }, [refreshTick]);
 
