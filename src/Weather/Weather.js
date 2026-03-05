@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 const WEATHER_API_KEY = "9e49ced90a630f4dcffde933bd2872b5";
 const CITY = "Nahariya";
