@@ -4,9 +4,9 @@ import YouTube from "react-youtube";
 import "../App.css";
 import "../index.css";
 
-const YOUTUBE_VIDEO_ID = "jsYjqmpzoxo";
-const CHANNEL_ID = "UC_x5XG1OV2P6uZZ5FSM9Ttw"; // example: Google Developers
-const VIDEOS_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messages/main/videos.json";
+//const YOUTUBE_VIDEO_ID = "jsYjqmpzoxo";
+//const CHANNEL_ID = "UC_x5XG1OV2P6uZZ5FSM9Ttw"; // example: Google Developers
+//const VIDEOS_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messages/main/videos.json";
 
 const YoutubeManager = ({ refreshTick }) => {
 /*     const [videos, setVideos] = useState([
@@ -61,7 +61,7 @@ const YoutubeManager = ({ refreshTick }) => {
         "stqBS3m-3WE",
         "9vMh9f41pqE"]); // default fallback */
     const [videos, setVideos] = useState([]); // default fallback
-    const initRef = useRef(false);
+    //const initRef = useRef(false);
 
     const [currentVideo, setCurrentVideo] = useState(""/* "9Vti9E-TASg" */);
 
