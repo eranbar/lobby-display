@@ -68,7 +68,7 @@ const YoutubeManager = ({ refreshTick }) => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const mongoPlaylists = await axios.get("https://lobby-display-sh6g.onrender.com:4000/playlists");
+                const mongoPlaylists = await axios.get("https://lobby-display-sh6g.onrender.com/playlists");
                 // in case no data in mongo db will retrieve it using youtube api.
                 const res = mongoPlaylists?? await axios.get(
                     `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 //const MESSAGES_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messages/main/messages.json";
-const MESSAGES_URL = "https://lobby-display-sh6g.onrender.com:4000/messages";
+const MESSAGES_URL = "https://lobby-display-sh6g.onrender.com/messages";
 const Messages = ({refreshTick}) => {
 /*     const [messages, setMessages] = useState([
         "message 1",
