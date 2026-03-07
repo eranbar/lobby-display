@@ -96,10 +96,10 @@ body,
 }
 
 .video-container {
-  flex: 1;
-  /* <-- THIS MAKES THE VIDEO FILL THE SCREEN */
   position: relative;
-  width: 100%;
+  width: 100vw;
+  height: calc(100vh - 84px);
+  /* header height */
   overflow: hidden;
   background: black;
 }
@@ -116,6 +116,18 @@ body,
   box-sizing: border-box;
 }
 
+.youtube-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.youtube-player iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+}
 
 .embla {
   position: absolute;
