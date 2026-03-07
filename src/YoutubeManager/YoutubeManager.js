@@ -114,13 +114,25 @@ const YoutubeManager = ({ refreshTick }) => {
     }, [videos]);
 
     // 🔹 Handle video ended event (optional future enhancement)
-    const handleVideoEnd = () => {
-        const random = videos[Math.floor(Math.random() * videos.length)];
-        setCurrentVideo(random);
+    // const handleVideoEnd = () => {
+    //     const random = videos[Math.floor(Math.random() * videos.length)];
+    //     setCurrentVideo(random);
+    // };
+
+    const handlePlayerStateChange = (event) => {
+        if (event.data === 0) {
+            let random;
+            do {
+                random = videos[Math.floor(Math.random() * videos.length)];
+            } while (random === currentVideo && videos.length > 1);
+
+            setCurrentVideo(random);
+        }
     };
 
     return (
         <YouTube
+            key={currentVideo}
             videoId={currentVideo}
             className="youtube-player"
             opts={{
@@ -134,7 +146,7 @@ const YoutubeManager = ({ refreshTick }) => {
                     mute: 0
                 }
             }}
-            onEnd={handleVideoEnd}
+            onStateChange={handlePlayerStateChange}
         />
 
     );

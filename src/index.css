@@ -1,5 +1,8 @@
 /* ===== Reset & viewport ===== */
-html, body, #root, .app-root {
+html,
+body,
+#root,
+.app-root {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -26,8 +29,8 @@ html, body, #root, .app-root {
   position: relative;
   padding: 0 28px;
   box-sizing: border-box;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0));
   z-index: 40;
   flex-shrink: 0;
   justify-content: space-between;
@@ -36,12 +39,13 @@ html, body, #root, .app-root {
 }
 
 .title {
-  font-size: clamp(28px, 3.4vw, 44px); /* responsive large title */
+  font-size: clamp(28px, 3.4vw, 44px);
+  /* responsive large title */
   margin: 0;
   letter-spacing: 0.6px;
   font-weight: 700;
   color: #eaf6ff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 /* Weather block sits top-right */
@@ -56,9 +60,25 @@ html, body, #root, .app-root {
   pointer-events: none;
   white-space: nowrap;
 }
-.weather-city { font-weight: 700; font-size: clamp(16px, 1.6vw, 20px); color: #bfe9ff; }
-.weather-temp { font-size: clamp(20px, 2.8vw, 34px); font-weight: 800; color: #fffae6; margin-top: 2px; }
-.weather-desc { font-size: clamp(12px, 1.2vw, 14px); color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+.weather-city {
+  font-weight: 700;
+  font-size: clamp(16px, 1.6vw, 20px);
+  color: #bfe9ff;
+}
+
+.weather-temp {
+  font-size: clamp(20px, 2.8vw, 34px);
+  font-weight: 800;
+  color: #fffae6;
+  margin-top: 2px;
+}
+
+.weather-desc {
+  font-size: clamp(12px, 1.2vw, 14px);
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 2px;
+}
 
 /* ===== Stage (video) fills remainder of viewport ===== */
 .stage {
@@ -76,7 +96,8 @@ html, body, #root, .app-root {
 }
 
 .video-container {
-  flex: 1; /* <-- THIS MAKES THE VIDEO FILL THE SCREEN */
+  flex: 1;
+  /* <-- THIS MAKES THE VIDEO FILL THE SCREEN */
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -85,7 +106,7 @@ html, body, #root, .app-root {
 
 
 .youtube-player,
-.youtube-player > div,
+.youtube-player>div,
 .youtube-player iframe {
   position: absolute;
   top: 0;
@@ -96,7 +117,84 @@ html, body, #root, .app-root {
 }
 
 
+.embla {
+  position: absolute;
+  bottom: 4vh;
+  width: 100%;
+  z-index: 30;
+  pointer-events: none;
+}
 
+.embla__container {
+  display: flex;
+  align-items: center;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 0 3vw;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  opacity: 0.5;
+}
+
+/* center slide highlight */
+.embla__slide.is-center {
+  transform: scale(1.15);
+  opacity: 1;
+
+  .embla__slide.is-center .message-card {
+
+    box-shadow:
+      0 35px 80px rgba(0, 0, 0, 0.95),
+      0 0 50px rgba(255, 210, 77, 0.35),
+      inset 0 2px 10px rgba(255, 255, 255, 0.12);
+
+  }
+}
+
+.message-card {
+
+  background: linear-gradient(160deg,
+      rgba(15, 15, 15, 0.30),
+      rgba(5, 5, 5, 0.25));
+
+  color: #ffffff;
+
+  font-size: clamp(32px, 3.6vw, 72px);
+  font-weight: 900;
+
+  padding: 26px 42px;
+  border-radius: 20px;
+
+  text-align: right;
+  direction: rtl;
+
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  max-width: min(1200px, 80vw);
+
+  line-height: 1.25;
+
+  /* 3D lighting */
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.85),
+    inset 0 2px 6px rgba(255, 255, 255, 0.08);
+
+  /* white glow instead of gold */
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.5),
+    0 0 25px rgba(255, 255, 255, 0.25);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(10px);
+
+  transition: all 0.6s ease;
+}
 
 
 
@@ -106,14 +204,17 @@ html, body, #root, .app-root {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 84px; /* sits above footer and controls */
-  height: 18vh; /* big area, scales with viewport */
+  bottom: 84px;
+  /* sits above footer and controls */
+  height: 18vh;
+  /* big area, scales with viewport */
   min-height: 72px;
   display: flex;
   align-items: center;
   overflow: hidden;
   z-index: 50;
-  pointer-events: none; /* let clicks pass through */
+  pointer-events: none;
+  /* let clicks pass through */
 }
 
 /* Track is long — duplicate messages handled in JSX */
@@ -122,7 +223,7 @@ html, body, #root, .app-root {
   align-items: center;
   gap: clamp(32px, 3.4vw, 64px);
   /* adjust speed: smaller -> faster; uses CSS variable set inline or here */
-  animation: ticker-scroll var(--ticker-speed, 36s) linear infinite;
+  animation: ticker-scroll var(--ticker-speed, 66s) linear infinite;
   will-change: transform;
 }
 
@@ -131,18 +232,26 @@ html, body, #root, .app-root {
   flex: 0 0 auto;
   font-weight: 800;
   color: #ffd24d;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-  font-size: clamp(26px, 3.8vw, 64px); /* responsive: big on TV */
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  font-size: clamp(26px, 3.8vw, 64px);
+  /* responsive: big on TV */
   white-space: nowrap;
   padding: 6px 10px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02));
   border-radius: 6px;
 }
 
 /* Smooth, seamless scroll: translate from 0 to -50% (we duplicate content) */
 @keyframes ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); } /* because content is duplicated in width */
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+
+  /* because content is duplicated in width */
 }
 
 /* ===== Footer ===== */
@@ -150,22 +259,32 @@ html, body, #root, .app-root {
   height: 36px;
   line-height: 36px;
   text-align: center;
-  color: rgba(255,255,255,0.55);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.01));
+  color: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(0, 0, 0, 0.01));
   flex-shrink: 0;
   z-index: 40;
 }
 
 /* ===== Reduce motion preference support ===== */
 @media (prefers-reduced-motion: reduce) {
-  .ticker-track { animation: none; }
+  .ticker-track {
+    animation: none;
+  }
 }
 
 /* ===== Small-screen adjustments (if someone opens on phone) ===== */
 @media (max-width: 520px) {
-  .ticker-item { font-size: clamp(18px, 4.8vw, 28px); }
-  .title { font-size: clamp(20px, 6vw, 28px); }
-  .weather-temp { font-size: clamp(16px, 4.2vw, 20px); }
+  .ticker-item {
+    font-size: clamp(18px, 4.8vw, 28px);
+  }
+
+  .title {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+
+  .weather-temp {
+    font-size: clamp(16px, 4.2vw, 20px);
+  }
 }
 
 .icon {
