@@ -125,9 +125,12 @@ const YoutubeManager = ({ refreshTick }) => {
             do {
                 random = videos[Math.floor(Math.random() * videos.length)];
             } while (random === currentVideo && videos.length > 1);
-
             setCurrentVideo(random);
         }
+    };
+
+    const handlePlayerReady = (event) => {
+        event.target.unMute(); // optional, unmute after autoplay starts
     };
 
     return (
@@ -147,6 +150,7 @@ const YoutubeManager = ({ refreshTick }) => {
                 }
             }}
             onStateChange={handlePlayerStateChange}
+            onReady={handlePlayerReady}
         />
 
     );
