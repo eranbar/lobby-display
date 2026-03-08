@@ -192,9 +192,11 @@ body,
   font-weight: 800;
 
   text-align: center;
-  color: #fff;
+  color: white;
 
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.25);
+  /* ⬅ more transparent */
+
   backdrop-filter: blur(6px);
 
   border-radius: 16px;
