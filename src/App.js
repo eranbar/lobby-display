@@ -18,7 +18,7 @@ const App = (props) => {
         console.log("VERSION:", process.env.REACT_APP_VERSION);
         if (data.version !== process.env.REACT_APP_VERSION) {
           window.location.reload(true);
-        }        
+        }
         // 🔥 trigger re-render
         setRefreshTick(tick => tick + 1);
 
@@ -43,8 +43,10 @@ const App = (props) => {
       </header>
       <div className="video-container">
         <YoutubeManager refreshTick={refreshTick} />
+        <div className="messages-overlay">
+          <Messages refreshTick={refreshTick} />
+        </div>
       </div>
-      <Messages refreshTick={refreshTick} />
     </div >
   );
 

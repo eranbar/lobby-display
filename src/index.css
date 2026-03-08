@@ -97,13 +97,10 @@ body,
 
 .video-container {
   position: relative;
-  width: 100vw;
   height: calc(100vh - 84px);
-  /* header height */
   overflow: hidden;
   background: black;
 }
-
 
 .youtube-player,
 .youtube-player>div,
@@ -119,8 +116,6 @@ body,
 .youtube-player {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
 }
 
 .youtube-player iframe {
@@ -130,11 +125,13 @@ body,
 }
 
 .embla {
-  position: absolute;
-  bottom: 4vh;
   width: 100%;
-  z-index: 30;
-  pointer-events: none;
+  overflow: hidden;
+}
+
+.embla__viewport {
+  width: 100%;
+  overflow: hidden;
 }
 
 .embla__container {
@@ -143,69 +140,67 @@ body,
 }
 
 .embla__slide {
-  flex: 0 0 auto;
+  flex: 0 0 65%;
+  min-width: 0;
+
   display: flex;
   justify-content: center;
-  padding: 0 3vw;
+  align-items: center;
+
+  opacity: 0.35;
+  transform: scale(0.8);
+
   transition: transform 0.6s ease, opacity 0.6s ease;
-  opacity: 0.5;
 }
 
 /* center slide highlight */
 .embla__slide.is-center {
   transform: scale(1.15);
   opacity: 1;
+}
 
-  .embla__slide.is-center .message-card {
+.embla__slide.is-center .message-card {
+  box-shadow:
+    0 35px 80px rgba(0, 0, 0, 0.95),
+    0 0 50px rgba(255, 210, 77, 0.35),
+    inset 0 2px 10px rgba(255, 255, 255, 0.12);
+}
 
-    box-shadow:
-      0 35px 80px rgba(0, 0, 0, 0.95),
-      0 0 50px rgba(255, 210, 77, 0.35),
-      inset 0 2px 10px rgba(255, 255, 255, 0.12);
 
-  }
+.messages-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+
+  display: flex;
+  align-items: flex-end;
+  /* ⬅ push to bottom */
+  justify-content: center;
+
+  padding-bottom: 120px;
+  /* adjust distance from bottom */
+
+  pointer-events: none;
 }
 
 .message-card {
+  max-width: min(1100px, 75vw);
 
-  background: linear-gradient(160deg,
-      rgba(15, 15, 15, 0.30),
-      rgba(5, 5, 5, 0.25));
+  padding: 28px 48px;
 
-  color: #ffffff;
+  font-size: clamp(28px, 3vw, 46px);
+  font-weight: 800;
 
-  font-size: clamp(32px, 3.6vw, 72px);
-  font-weight: 900;
+  text-align: center;
+  color: #fff;
 
-  padding: 26px 42px;
-  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
 
-  text-align: right;
-  direction: rtl;
+  border-radius: 16px;
 
-  white-space: normal;
-  overflow-wrap: break-word;
   word-break: break-word;
-
-  max-width: min(1200px, 80vw);
-
-  line-height: 1.25;
-
-  /* 3D lighting */
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.85),
-    inset 0 2px 6px rgba(255, 255, 255, 0.08);
-
-  /* white glow instead of gold */
-  text-shadow:
-    0 0 10px rgba(255, 255, 255, 0.5),
-    0 0 25px rgba(255, 255, 255, 0.25);
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  backdrop-filter: blur(10px);
-
-  transition: all 0.6s ease;
+  overflow-wrap: anywhere;
 }
 
 
