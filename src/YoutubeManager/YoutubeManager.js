@@ -78,7 +78,7 @@ const YoutubeManager = ({ refreshTick }) => {
                     newVideos = mongoPlaylists.data[0].videos;
                 } else {
                     const res = await axios.get(
-                        `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=electronic music&maxResults=50`
+                        `https://www.googleapis.com/youtube/v3/search?key=${process.env.REACT_APP_YOUTUBE_DEV_API_KEY}&part=id&type=video&q=deep house&maxResults=50`
                     );
 
                     newVideos = res.data.items.map(v => v.id.videoId);
