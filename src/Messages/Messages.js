@@ -1,11 +1,10 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import axios from "axios";
 
 const MESSAGES_URL = "https://lobby-display-sh6g.onrender.com/messages";
 
-const Messages = ({ refreshTick }) => {
-    const [messages, setMessages] = useState([]);
+const Messages = ({ messages, setMessages }) => {
 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
@@ -27,7 +26,7 @@ const Messages = ({ refreshTick }) => {
         };
 
         fetchMessages();
-    }, [refreshTick]);
+    }, [setMessages]);
 
     // autoplay every 10 seconds
     useEffect(() => {

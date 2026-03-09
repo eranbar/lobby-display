@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { Building2 } from "lucide-react";
+import { Building2, Settings } from "lucide-react";
 import YoutubeManager from "./YoutubeManager/YoutubeManager";
-import SignInButton from "./SignInButton";  // adjust path accordingly
+import AdminModal from "./Admin/AdminModal";
 import Weather from "./Weather/Weather";
 import Messages from "./Messages/Messages";
 
 const App = (props) => {
   const [refreshTick, setRefreshTick] = useState(0);
+  const [messages, setMessages] = useState([]);
+  const [showAdmin, setShowAdmin] = useState(false); // 👈 popup state
 
   useEffect(() => {
     // Auto-refresh every 30 minutes
@@ -33,20 +35,37 @@ const App = (props) => {
   return (
     <div className="app-root">
       <header className="topbar">
-        <div style={{ "align-items": "left" }}>
-          <SignInButton refreshTick={refreshTick} />
+        <div className="topbar-left">
+          <Weather refreshTick={refreshTick} />
         </div>
-        <h1 className="title">
-          <Building2 className="icon" /> יחידה 101 בניין 12
-        </h1>
-        <Weather refreshTick={refreshTick} />
+        <div className="topbar-center">
+          <h1 className="title">
+            <Building2 className="icon" /> יחידה 101 בניין 12
+          </h1>
+        </div>
+        <div className="topbar-right">
+          <button
+            className="admin-button"
+            onClick={() => setShowAdmin(true)}
+          >
+            <Settings size={18} />
+            Admin
+          </button>
+        </div>
       </header>
       <div className="video-container">
         <YoutubeManager refreshTick={refreshTick} />
         <div className="messages-overlay">
-          <Messages refreshTick={refreshTick} />
+          <Messages messages={messages} setMessages={setMessages}/>
         </div>
       </div>
+      {showAdmin && (
+        <AdminModal
+          messages={messages}
+          setMessages={setMessages}
+          onClose={() => setShowAdmin(false)}
+        />
+      )}
     </div >
   );
 
