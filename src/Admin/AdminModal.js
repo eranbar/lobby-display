@@ -4,6 +4,8 @@ import "./AdminModal.css";
 const AdminModal = ({ messages, setMessages, onClose }) => {
 
     const [newMessageText, setNewMessageText] = useState("");
+    const [editingMessageId, setEditingMessageId] = useState(null);
+    const [editedText, setEditedText] = useState("");
 
     const saveMessage = () => {
         if (!newMessageText.trim()) return;
@@ -28,6 +30,37 @@ const AdminModal = ({ messages, setMessages, onClose }) => {
         });
     };
 
+    const editMessage = (msg) => {
+
+        setEditingMessageId(msg._id);
+        setEditedText(msg.text);
+
+    };
+
+    const saveEdit = () => {
+
+        if (!editedText.trim()) return;
+
+        setMessages(prev =>
+            prev.map(m =>
+                m._id === editingMessageId
+                    ? { ...m, text: editedText }
+                    : m
+            )
+        );
+
+        setEditingMessageId(null);
+        setEditedText("");
+
+    };
+
+    const discardEdit = () => {
+
+        setEditingMessageId(null);
+        setEditedText("");
+
+    };
+
     return (
         <div className="admin-modal">
 
@@ -35,7 +68,7 @@ const AdminModal = ({ messages, setMessages, onClose }) => {
 
                 {/* HEADER */}
                 <div className="admin-modal-header">
-                    <h2>Admin Panel</h2>
+                    <h2 style={{ alignItems: "center" }}>ניהול הודעות לדיירים</h2>
 
                     <button
                         className="admin-close"
@@ -48,42 +81,87 @@ const AdminModal = ({ messages, setMessages, onClose }) => {
                 {/* BODY */}
                 <div className="admin-modal-body">
 
-                    <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+                    <div className="admin-input-row">
 
                         <input
                             type="text"
-                            placeholder="Message text"
+                            placeholder="הכנס הודעה חדשה.."
                             value={newMessageText}
                             onChange={(e) => setNewMessageText(e.target.value)}
                             style={{ flex: 1 }}
                         />
-
                         <button onClick={saveMessage}>
                             Add
                         </button>
-
                     </div>
-
                     <div className="messages-list">
 
                         {messages.map(msg => (
                             <div
                                 key={msg._id}
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    padding: "10px",
-                                    borderBottom: "1px solid rgba(255,255,255,0.1)"
-                                }}
+                                className={`message-item ${editingMessageId === msg._id ? "editing" : ""
+                                    }`}
                             >
 
-                                <span>{msg.text}</span>
+                                {editingMessageId === msg._id ? (
 
-                                <span>{msg.timestamp}</span>
+                                    <>
+                                        <input
+                                            className="edit-input"
+                                            value={editedText}
+                                            onChange={(e) => setEditedText(e.target.value)}
+                                        />
 
-                                <button onClick={() => deleteMessage(msg._id)}>
-                                    Delete
-                                </button>
+                                        <div className="message-actions">
+
+                                            <button
+                                                className="icon-btn"
+                                                onClick={saveEdit}
+                                            >
+                                                <img src="/icons/save.jpeg" alt="save" />
+                                            </button>
+
+                                            <button
+                                                className="icon-btn"
+                                                onClick={discardEdit}
+                                            >
+                                                <img src="/icons/trash.png" alt="discard" />
+                                            </button>
+
+                                        </div>
+                                    </>
+
+                                ) : (
+
+                                    <>
+                                        <span className="message-text">
+                                            {msg.text}
+                                        </span>
+
+                                        <span className="message-time">
+                                            {new Date(msg.timestamp).toLocaleTimeString()}
+                                        </span>
+
+                                        <div className="message-actions">
+
+                                            <button
+                                                className="icon-btn"
+                                                onClick={() => editMessage(msg)}
+                                            >
+                                                <img src="/icons/edit.jpeg" alt="edit" />
+                                            </button>
+
+                                            <button
+                                                className="icon-btn"
+                                                onClick={() => deleteMessage(msg._id)}
+                                            >
+                                                <img src="/icons/trash.png" alt="delete" />
+                                            </button>
+
+                                        </div>
+                                    </>
+
+                                )}
 
                             </div>
                         ))}

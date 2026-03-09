@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,4 +40,246 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 22px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.admin-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.admin-close:hover {
+  color: white;
+}
+
+.admin-modal-body {
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  overflow-y: auto;
+}
+
+.admin-modal-body {
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  overflow-y: auto;
+}
+
+.admin-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-input-row input {
+  flex: 1;
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  direction: rtl;
+  text-align: right;
+  outline: none;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-input-row input::placeholder {
+  color: #8b93a6;
+}
+
+.admin-input-row input:focus::placeholder {
+  opacity: 0.4;
+}
+
+.admin-input-row input:focus {
+  border: 1px solid #f4b63f;
+  box-shadow: 0 0 0 2px rgba(244, 182, 63, 0.35);
+}
+
+.admin-input-row button {
+  background: #f4b63f;
+  border: none;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.message-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 16px;
+
+  background: #141b2b;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  direction: rtl;
+  transition: all 0.15s ease;
+}
+
+.message-item:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.message-item.editing {
+  border: 1px solid #f4b63f;
+}
+
+.edit-input {
+  flex: 1;
+
+  direction: rtl;
+  text-align: right;
+
+  background: #0b1220;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  padding: 10px;
+  border-radius: 8px;
+
+  color: white;
+
+  outline: none;
+
+  margin-left: 10px;
+}
+
+.edit-input:focus {
+
+  border: 1px solid #f4b63f;
+  box-shadow: 0 0 0 2px rgba(244, 182, 63, 0.35);
+
+}
+
+.save-btn {
+
+  background: #f4b63f;
+  border: none;
+
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.discard-btn {
+
+  background: transparent;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  color: white;
+
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.message-text {
+  flex: 1;
+
+  direction: rtl;
+  text-align: right;
+
+  margin-left: 20px;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.message-time {
+  font-size: 12px;
+  opacity: 0.6;
+
+  margin-right: 15px;
+
+  white-space: nowrap;
+}
+
+.delete-btn {
+  background: #ff5a5a;
+  border: none;
+  color: white;
+
+  padding: 6px 10px;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* space between messages */
+
+  max-height: 400px;
+  overflow-y: auto;
+
+  margin-top: 10px;
+}
+
+.message-actions {
+  display: flex;
+  gap: 10px;
+  padding-right: 20px;
+}
+
+.icon-btn {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  opacity: 0.75;
+  transition: opacity 0.15s ease;
+}
+
+.icon-btn:hover {
+  opacity: 1;
+}
+
+.icon-btn img {
+  width: 16px;
+  height: 16px;
 }
