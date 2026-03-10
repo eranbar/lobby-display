@@ -38,6 +38,34 @@ app.get("/playlists", async (req, res) => {
   }
 });
 
+// SAVE messages (overwrite)
+
+app.post("/api/messages", async (req, res) => {
+
+  try {
+
+    const messages = req.body;
+
+    // remove existing messages
+    await Message.deleteMany({});
+
+    // insert new messages
+    if (messages.length > 0) {
+      await Message.insertMany(messages);
+    }
+
+    res.json({ success: true });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({ error: "Failed to save messages" });
+
+  }
+
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

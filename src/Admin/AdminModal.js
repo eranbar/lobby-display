@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import "./AdminModal.css";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const AdminModal = ({ messages, setMessages, onClose }) => {
 
     const [newMessageText, setNewMessageText] = useState("");
     const [editingMessageId, setEditingMessageId] = useState(null);
     const [editedText, setEditedText] = useState("");
+    const MESSAGES_URL = "https://lobby-display-sh6g.onrender.com/api/messages";
 
     const saveMessage = () => {
         if (!newMessageText.trim()) return;
 
         const newMsg = {
-            _id: Date.now(),
+            //_id: uuidv4(),
             text: newMessageText,
             timestamp: Date.now()
         };
@@ -61,6 +64,18 @@ const AdminModal = ({ messages, setMessages, onClose }) => {
 
     };
 
+    const HandleCloseModal = async () => {
+
+        try {
+            await axios.post(MESSAGES_URL, messages);
+            console.log("Messages saved");
+
+        } catch (err) {
+            console.error("Failed to save messages", err);
+        }
+        onClose();
+    }
+
     return (
         <div className="admin-modal">
 
@@ -72,7 +87,7 @@ const AdminModal = ({ messages, setMessages, onClose }) => {
 
                     <button
                         className="admin-close"
-                        onClick={onClose}
+                        onClick={HandleCloseModal}
                     >
                         ✕
                     </button>
