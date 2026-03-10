@@ -28,7 +28,7 @@ const Messages = ({ messages, setMessages, showAdmin, refreshTick }) => {
             fetchMessages();
         }
 
-    }, [refreshTick, showAdmin]);
+    }, [refreshTick, showAdmin, setMessages]);
 
     // autoplay every 10 seconds
     useEffect(() => {
