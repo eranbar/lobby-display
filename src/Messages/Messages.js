@@ -4,7 +4,7 @@ import axios from "axios";
 
 const MESSAGES_URL = "https://lobby-display-sh6g.onrender.com/messages";
 
-const Messages = ({ messages, setMessages }) => {
+const Messages = ({ messages, setMessages, showAdmin, refreshTick }) => {
 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
@@ -24,9 +24,11 @@ const Messages = ({ messages, setMessages }) => {
                 return newData;
             });
         };
+        if (!showAdmin) {
+            fetchMessages();
+        }
 
-        fetchMessages();
-    }, [setMessages]);
+    }, [refreshTick, showAdmin]);
 
     // autoplay every 10 seconds
     useEffect(() => {
