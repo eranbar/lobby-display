@@ -4,7 +4,7 @@ import axios from "axios";
 
 const MESSAGES_URL = "https://lobby-display-sh6g.onrender.com/messages";
 
-const Messages = ({ messages, setMessages, showAdmin, refreshTick }) => {
+const Messages = ({ messages, setMessages, showAdmin }) => {
 
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
@@ -18,9 +18,14 @@ const Messages = ({ messages, setMessages, showAdmin, refreshTick }) => {
             const res = await axios.get(MESSAGES_URL);
             setMessages(prev => {
                 const newData = res.data;
-                if (JSON.stringify(prev) === JSON.stringify(newData)) {
-                    return prev;
+
+                if (
+                    prev.length === newData.length &&
+                    prev.every((msg, index) => msg._id === newData[index]._id)
+                ) {
+                    return prev; // nothing changed
                 }
+
                 return newData;
             });
         };
@@ -28,7 +33,11 @@ const Messages = ({ messages, setMessages, showAdmin, refreshTick }) => {
             fetchMessages();
         }
 
-    }, [refreshTick, showAdmin, setMessages]);
+        const interval = setInterval(fetchMessages, 15000);
+
+        return () => clearInterval(interval);
+
+    }, [showAdmin, setMessages]);
 
     // autoplay every 10 seconds
     useEffect(() => {

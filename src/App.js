@@ -56,7 +56,7 @@ const App = (props) => {
       <div className="video-container">
         <YoutubeManager refreshTick={refreshTick} />
         <div className="messages-overlay">
-          <Messages messages={messages} setMessages={setMessages} showAdmin={showAdmin} refreshTick={refreshTick}/>
+          <Messages messages={messages} setMessages={setMessages} showAdmin={showAdmin}/>
         </div>
       </div>
       {showAdmin && (

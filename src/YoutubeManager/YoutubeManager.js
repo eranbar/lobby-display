@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
 import "../App.css";
@@ -9,61 +9,9 @@ import "../index.css";
 //const VIDEOS_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/lobby-messages/main/videos.json";
 
 const YoutubeManager = ({ refreshTick }) => {
-    /*     const [videos, setVideos] = useState([
-            "9Vti9E-TASg",
-            "9hFu79HXJGA",
-            "gCYcHz2k5x0",
-            "jLivRY6pbJE",
-            "UScyjLs_XNU",
-            "2UCBbcBT5Es",
-            "KSgKKSny0Qo",
-            "_nvCGQakwD0",
-            "WHHmiWUqIZA",
-            "XJktaXYRWBg",
-            "a4fv-BtzNmY",
-            "sBJT1BpOcvg",
-            "InAV384eYfU",
-            "5-EuMi9-nSw",
-            "qAIy8godTy4",
-            "Bdc47GCgdzQ",
-            "yFgdfG7z5Ho",
-            "sHqTmgpBzBQ",
-            "_QY_QblgBn0",
-            "OWvj21xs-u0",
-            "zeHTVxkycgE",
-            "1d__3j-bcwM",
-            "JA86AFp0gbI",
-            "niKlBPLht-4",
-            "lsduGj42ZJA",
-            "-_D1TMxDbDE",
-            "avt-RhUxcmk",
-            "Lo0ELoepTCM",
-            "_ovdm2yX4MA",
-            "JE3QM_9sljI",
-            "39Gc2H4lF1A",
-            "H8qrbwfhtn4",
-            "kpbU7kPGS4k",
-            "8Lhdn1paMgY",
-            "ZIIT9hO1EZE",
-            "z_7F9q7EIoI",
-            "KnJvdDxQrZ0",
-            "ceH9Ve5J37k",
-            "QJPhjOeJkNQ",
-            "_9SgawMKmdo",
-            "y0ZIcsuJwx4",
-            "Rp86eVxDNgc",
-            "gU2Jzsa9Q_Y",
-            "ve9mgnCUurA",
-            "sTmgaP2gYsk",
-            "loeRzRrMwLM",
-            "VmcRrr4TX74",
-            "y_FkQ2jHd1c",
-            "stqBS3m-3WE",
-            "9vMh9f41pqE"]); // default fallback */
     const [videos, setVideos] = useState([]); // default fallback
-    //const initRef = useRef(false);
-
     const [currentVideo, setCurrentVideo] = useState(""/* "9Vti9E-TASg" */);
+    const playerRef = useRef(null);
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -85,14 +33,17 @@ const YoutubeManager = ({ refreshTick }) => {
                 }
 
                 // 🔹 Compare with previous state safely
-                setVideos(prevVideos => {
-                    if (JSON.stringify(prevVideos) !== JSON.stringify(newVideos)) {
-                        console.log("Playlist updated");
-                        return newVideos;
+                setVideos(prev => {
+                    if (
+                        prev.length === newVideos.length &&
+                        prev.every((v, i) => v === newVideos[i])
+                    ) {
+                        return prev;
                     }
 
-                    console.log("Playlist unchanged");
-                    return prevVideos;
+                    console.log("Playlist updated");
+
+                    return newVideos;
                 });
 
             } catch (err) {
@@ -108,9 +59,9 @@ const YoutubeManager = ({ refreshTick }) => {
     useEffect(() => {
         if (videos.length === 0) return;
 
-        const random = Math.floor(Math.random() * videos.length);
+        const random = videos[Math.floor(Math.random() * videos.length)];
         console.log("Setting currentVideo to:", videos[random]);
-        setCurrentVideo(videos[random]);
+        setCurrentVideo(random);
     }, [videos]);
 
     // 🔹 Handle video ended event (optional future enhancement)
@@ -119,18 +70,30 @@ const YoutubeManager = ({ refreshTick }) => {
     //     setCurrentVideo(random);
     // };
 
-    const handlePlayerStateChange = (event) => {
-        if (event.data === 0) {
-            let random;
-            do {
-                random = videos[Math.floor(Math.random() * videos.length)];
-            } while (random === currentVideo && videos.length > 1);
-            setCurrentVideo(random);
-        }
+    const handlePlayerReady = (event) => {
+        playerRef.current = event.target;
+        event.target.unMute(); // optional, unmute after autoplay starts
     };
 
-    const handlePlayerReady = (event) => {
-        event.target.unMute(); // optional, unmute after autoplay starts
+    const playNextVideo = () => {
+
+        if (!playerRef.current || videos.length === 0) return;
+
+        let random;
+
+        do {
+            random = videos[Math.floor(Math.random() * videos.length)];
+        } while (random === currentVideo && videos.length > 1);
+
+        setCurrentVideo(random);
+        playerRef.current.loadVideoById(random);
+    };
+
+    const handlePlayerStateChange = (event) => {
+        // 0 = video ended
+        if (event.data === 0) {
+            playNextVideo();
+        }
     };
 
     return (
