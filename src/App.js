@@ -4,6 +4,8 @@ import YoutubeManager from "./YoutubeManager/YoutubeManager";
 import AdminModal from "./Admin/AdminModal";
 import Weather from "./Weather/Weather";
 import Messages from "./Messages/Messages";
+import News from "./News/News";
+import "./News/News.css";
 
 const App = (props) => {
   const [refreshTick, setRefreshTick] = useState(0);
@@ -56,8 +58,11 @@ const App = (props) => {
       <div className="video-container">
         <YoutubeManager refreshTick={refreshTick} />
         <div className="messages-overlay">
-          <Messages messages={messages} setMessages={setMessages} showAdmin={showAdmin}/>
+          <Messages messages={messages} setMessages={setMessages} showAdmin={showAdmin} />
         </div>
+      </div>
+      <div className="news-bar">
+        <News />
       </div>
       {showAdmin && (
         <AdminModal

@@ -4,6 +4,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import Message from "./models/Message.js";  // ⚠️ .js extension is required in ESM
 import Playlist from "./models/Playlist.js";
+import Parser from "rss-parser";
+
+const parser = new Parser();
 
 dotenv.config();
 
@@ -17,6 +20,32 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
+
+let cachedNews = [];
+let lastFetch = 0;
+
+app.get("/api/news", async (req, res) => {
+
+  const now = Date.now();
+
+  if (now - lastFetch > 300000) {
+
+    const feed = await parser.parseURL(
+      "https://www.ynet.co.il/Integration/StoryRss2.xml"
+    );
+
+    cachedNews = feed.items.slice(0, 10).map(item => ({
+      title: item.title,
+      link: item.link
+    }));
+
+    lastFetch = now;
+
+  }
+
+  res.json(cachedNews);
+
+});
 
 // GET all messages
 app.get("/messages", async (req, res) => {
