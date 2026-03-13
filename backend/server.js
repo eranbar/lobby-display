@@ -34,9 +34,17 @@ app.get("/api/news", async (req, res) => {
       "https://www.ynet.co.il/Integration/StoryRss2.xml"
     );
 
-    cachedNews = feed.items.slice(0, 10).map(item => ({
+    cachedNews = feed.items.slice().map(item => ({
       title: item.title,
-      link: item.link
+      link: item.link,
+      date: new Date(item.pubDate)?.toLocaleDateString('he-IL', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      })
     }));
 
     lastFetch = now;

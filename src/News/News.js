@@ -35,9 +35,14 @@ const News = () => {
 
             <div className="news-track">
                 {items.map((n, i) => (
-                    <span key={i} className="news-item">
-                        {n.title}
-                    </span>
+                    <div className="news-text">
+                        <span key={i} className="news-item-blue">
+                            {n.date}:
+                        </span>                        
+                        <span key={i} className="news-item">
+                            {n.title}
+                        </span>
+                    </div>
                 ))}
             </div>
 

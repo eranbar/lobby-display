@@ -10,14 +10,26 @@
 
 .news-item {
     margin-left: 60px;
+    margin-right: 10px;
     font-size: 28px;
+    color: whitesmoke;
+}
+
+.news-item-blue {
+    font-size: 28px;
+    color: whitesmoke;
+}
+
+.news-text {
+    display: inline-block;
+    
 }
 
 .news-ticker {
     position: relative;
     overflow: hidden;
     background: black;
-    color: yellow;
+    
     direction: rtl;
     height: 50px;
     display: flex;
@@ -27,7 +39,7 @@
 .news-track {
     display: inline-block;
     white-space: nowrap;
-    animation: tickerScroll 200s linear infinite;
+    animation: tickerScroll 1000s linear infinite;
 }
 
 .news-label {
