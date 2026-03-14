@@ -13,24 +13,50 @@ const App = (props) => {
   const [showAdmin, setShowAdmin] = useState(false); // 👈 popup state
 
   useEffect(() => {
-    // Auto-refresh every 30 minutes
-    const interval = setInterval(async () => {
+    const checkVersion = async () => {
       try {
-        const response = await fetch("/version.json", { cache: "no-store" });
-        const data = await response.json();
-        console.log("ENV:", process.env);
-        console.log("VERSION:", process.env.REACT_APP_VERSION);
-        if (data.version !== process.env.REACT_APP_VERSION) {
-          window.location.reload(true);
+        const res = await fetch(`/version.json?t=${Date.now()}`);
+        const data = await res.json();
+
+        const current = localStorage.getItem("appVersion");
+
+        if (!current) {
+          localStorage.setItem("appVersion", data.version);
+          return;
         }
-        // 🔥 trigger re-render
-        setRefreshTick(tick => tick + 1);
+
+        if (current !== data.version) {
+          console.log("New version detected, reloading...");
+          localStorage.setItem("appVersion", data.version);
+          window.location.reload();
+        }
+
+        setRefreshTick(t => t + 1);
 
       } catch (err) {
         console.log("version check failed", err);
       }
-    }, 15000);
+    };
+
+    checkVersion();
+    const interval = setInterval(checkVersion, 15000);
+
     return () => clearInterval(interval);
+
+  }, []);
+
+  // Wake lock for smart TVs
+  useEffect(() => {
+    const wakeLock = async () => {
+      try {
+        await navigator.wakeLock.request("screen");
+        console.log("Wake lock active");
+      } catch (err) {
+        console.log("Wake lock failed", err);
+      }
+    };
+
+    wakeLock();
   }, []);
 
   // App.js (only the render part shown; keep your existing fetch/useEffect logic)

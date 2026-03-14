@@ -187,7 +187,7 @@ body,
   /* ⬅ push to bottom */
   justify-content: center;
 
-  padding-bottom: 120px;
+  padding-bottom: 0 !important;
   /* adjust distance from bottom */
 
   pointer-events: none;
