@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
 import "../App.css";
@@ -56,16 +56,16 @@ const YoutubeManager = ({ refreshTick }) => {
     }, [refreshTick]);
 
 
-    const playNextVideo = () => {
+    const playNextVideo = useCallback(() => {
         const random = videos[Math.floor(Math.random() * videos.length)];
-        console.log("Setting currentVideo to:", videos[random]);
+        console.log("Setting currentVideo to:", random);
         setCurrentVideo(random);
-    }
+    }, [videos]);
 
     useEffect(() => {
         if (videos.length === 0) return;
         playNextVideo();
-    }, [videos]);
+    }, [videos, playNextVideo]);
 
     // 🔹 Handle video ended event (optional future enhancement)
     // const handleVideoEnd = () => {
@@ -82,19 +82,19 @@ const YoutubeManager = ({ refreshTick }) => {
 
     }
 
-/*     const playNextVideo = () => {
-
-        if (!playerRef.current || videos.length === 0) return;
-
-        let random;
-
-        do {
-            random = videos[Math.floor(Math.random() * videos.length)];
-        } while (random === currentVideo && videos.length > 1);
-
-        setCurrentVideo(random);
-        playerRef.current.loadVideoById(random);
-    }; */
+    /*     const playNextVideo = () => {
+    
+            if (!playerRef.current || videos.length === 0) return;
+    
+            let random;
+    
+            do {
+                random = videos[Math.floor(Math.random() * videos.length)];
+            } while (random === currentVideo && videos.length > 1);
+    
+            setCurrentVideo(random);
+            playerRef.current.loadVideoById(random);
+        }; */
 
     const handlePlayerStateChange = (event) => {
         // 0 = video ended
