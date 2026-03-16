@@ -56,12 +56,15 @@ const YoutubeManager = ({ refreshTick }) => {
     }, [refreshTick]);
 
 
-    useEffect(() => {
-        if (videos.length === 0) return;
-
+    const playNextVideo = () => {
         const random = videos[Math.floor(Math.random() * videos.length)];
         console.log("Setting currentVideo to:", videos[random]);
         setCurrentVideo(random);
+    }
+
+    useEffect(() => {
+        if (videos.length === 0) return;
+        playNextVideo();
     }, [videos]);
 
     // 🔹 Handle video ended event (optional future enhancement)
@@ -75,7 +78,11 @@ const YoutubeManager = ({ refreshTick }) => {
         event.target.unMute(); // optional, unmute after autoplay starts
     };
 
-    const playNextVideo = () => {
+    const onPlayerError = (event) => {
+
+    }
+
+/*     const playNextVideo = () => {
 
         if (!playerRef.current || videos.length === 0) return;
 
@@ -87,7 +94,7 @@ const YoutubeManager = ({ refreshTick }) => {
 
         setCurrentVideo(random);
         playerRef.current.loadVideoById(random);
-    };
+    }; */
 
     const handlePlayerStateChange = (event) => {
         // 0 = video ended
@@ -114,6 +121,7 @@ const YoutubeManager = ({ refreshTick }) => {
             }}
             onStateChange={handlePlayerStateChange}
             onReady={handlePlayerReady}
+            onError={onPlayerError}
         />
 
     );
