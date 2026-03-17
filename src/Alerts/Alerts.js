@@ -33,6 +33,18 @@ const Alerts = () => {
 
   }, []);
 
+  useEffect(() => {
+
+  if (alerts.length === 0) return;
+
+  const timeout = setTimeout(() => {
+    setAlerts([]);
+  }, 15000); // 15 sec
+
+  return () => clearTimeout(timeout);
+
+}, [alerts]);
+
   if (!alerts || alerts.length === 0) return null;
 
   return (
