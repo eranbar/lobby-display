@@ -6,6 +6,7 @@ import Weather from "./Weather/Weather";
 import Messages from "./Messages/Messages";
 import News from "./News/News";
 import "./News/News.css";
+import Alerts from "./Alerts/Alerts";
 
 const App = (props) => {
   const [refreshTick, setRefreshTick] = useState(0);
@@ -62,6 +63,7 @@ const App = (props) => {
   // App.js (only the render part shown; keep your existing fetch/useEffect logic)
   return (
     <div className="app-root">
+      <Alerts />
       <header className="topbar">
         <div className="topbar-left">
           <Weather refreshTick={refreshTick} />
