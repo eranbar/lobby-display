@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import Message from "./models/Message.js";  // ⚠️ .js extension is required in ESM
 import Playlist from "./models/Playlist.js";
 import Parser from "rss-parser";
+import axios from "axios";
 
 const parser = new Parser();
 
@@ -20,6 +21,60 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
+
+let cachedAlerts = [];
+let lastAlertId = null;
+
+app.get("/api/alerts", async (req, res) => {
+
+  try {
+
+    const response = await axios.get(
+      "https://www.oref.org.il/warningMessages/alert/alerts.json",
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0",
+          "Referer": "https://www.oref.org.il/"
+        }
+      }
+    );
+
+    const data = response.data;
+
+    // Example structure:
+    // { title, data: ["נהריה", "עכו"], desc, id }
+
+    if (data && data.data) {
+
+      // prevent duplicates
+      if (data.id !== lastAlertId) {
+
+        lastAlertId = data.id;
+
+        cachedAlerts = [{
+          title: data.title,
+          areas: data.data,
+          time: new Date()
+        }];
+
+        console.log("🚨 New Alert:", cachedAlerts);
+
+      }
+
+    }
+
+    res.json(cachedAlerts);
+
+  } catch (err) {
+
+    console.log("Alert fetch failed", err.message);
+
+    res.json(cachedAlerts); // fallback
+
+  }
+
+});
+
 
 let cachedNews = [];
 let lastFetch = 0;
