@@ -40,7 +40,7 @@ const Alerts = () => {
       {/* HEADER */}
       <div className="alerts-header">
         <span className="header-text">התרעות פיקוד העורף</span>
-        <img src="/icons/oref-icon.png" className="oref-icon" />
+        <img src="/icons/oref-icon.png" className="oref-icon" alt="alerts" />
       </div>
 
       {/* SUB HEADER */}
