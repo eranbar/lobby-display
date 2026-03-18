@@ -1,27 +1,84 @@
-.alert-overlay {
+/* PANEL */
+.alerts-panel {
+  direction: rtl;
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: -320px;
+  width: 300px;
+  height: 100%;
   z-index: 9999;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
+  transition: right 0.25s ease;
+
+  /* ORANGE SIDE LINE */
+  border-left: 6px solid #f28c00;
+
+  /* 🎯 TV STYLE BLUE BACKGROUND */
+  background:
+    radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.12), transparent 40%),
+    radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.05), transparent 50%),
+    linear-gradient(180deg, #021f33 0%, #405261 40%, #0e6bb8 100%);
 }
 
-.alert-box {
-  background: red;
+.alerts-panel.open {
+  right: 0;
+}
+
+/* HEADER */
+.alerts-header {
+  background: #1c5a85;
   color: white;
-  font-size: 36px;
   font-weight: bold;
-  padding: 20px 40px;
-  margin-top: 20px;
-  border-radius: 10px;
-  animation: flash 1s infinite;
+  font-size: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px;
+  position: relative;
 }
 
-@keyframes flash {
-  0% { opacity: 1; }
-  50% { opacity: 0.6; }
-  100% { opacity: 1; }
+/* ICON (top-right) */
+.oref-icon {
+  position: absolute;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+}
+
+/* SUB HEADER */
+.alerts-subheader {
+  background: #0f2f47;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+
+  padding: 10px;
+
+  border-top: 2px solid #0a2538;
+  border-bottom: 2px solid #f28c00;
+}
+
+/* LIST */
+.alerts-list {
+  padding: 8px;
+}
+
+/* ITEMS */
+.alert-item {
+  background: #dcdcdc;
+  color: black;
+
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+
+  padding: 8px;
+  margin-bottom: 6px;
+
+  border-radius: 6px;
+
+  /* ORANGE LINE UNDER EACH ITEM */
+  border-bottom: 3px solid #f28c00;
 }

@@ -25,30 +25,26 @@ mongoose.connect(process.env.MONGO_URI)
 let cachedAlerts = [];
 let lastAlertId = null;
 
-app.get("/api/alerts", async (req, res) => {
-
+const fetchAlerts = async () => {
   try {
-
     const response = await axios.get(
       "https://www.oref.org.il/warningMessages/alert/alerts.json",
       {
         headers: {
           "User-Agent": "Mozilla/5.0",
-          "Referer": "https://www.oref.org.il/"
-        }
+          "Referer": "https://www.oref.org.il/",
+          "Accept": "application/json, text/plain, */*",
+          "Accept-Language": "he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7",
+          "Connection": "keep-alive"
+        },
+        timeout: 5000
       }
     );
 
     const data = response.data;
 
-    // Example structure:
-    // { title, data: ["נהריה", "עכו"], desc, id }
-
-    if (data && data.data) {
-
-      // prevent duplicates
+    if (data?.data && data.data.length > 0) {
       if (data.id !== lastAlertId) {
-
         lastAlertId = data.id;
 
         cachedAlerts = [{
@@ -58,21 +54,23 @@ app.get("/api/alerts", async (req, res) => {
         }];
 
         console.log("🚨 New Alert:", cachedAlerts);
-
       }
-
+    } else {
+      // ✅ CLEAR when no alerts
+      cachedAlerts = [];
+      lastAlertId = null;
     }
 
-    res.json(cachedAlerts);
-
   } catch (err) {
-
-    console.log("Alert fetch failed", err.message);
-
-    res.json(cachedAlerts); // fallback
-
+    console.log("Polling failed:", err.message);
   }
+};
 
+// ✅ ONE interval only
+setInterval(fetchAlerts, 2000);
+
+app.get("/api/alerts", (req, res) => {
+  res.json(cachedAlerts);
 });
 
 
