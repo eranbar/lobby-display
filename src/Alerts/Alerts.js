@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./Alerts.css";
 
-const ALERTS_URL = "https://lobby-display-sh6g.onrender.com/api/alerts";
+//const ALERTS_URL = "https://lobby-display-sh6g.onrender.com/api/alerts";
+const ALERTS_URL = "http://localhost:4000/api/alerts";
 
 const Alerts = () => {
   const [alerts, setAlerts] = useState([]);
 
+  const audioRef = useRef(null);
+  
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
@@ -25,13 +28,37 @@ const Alerts = () => {
   }, []);
 
   useEffect(() => {
+    audioRef.current = new Audio("/sounds/alert.mp3");
+
+    const unlockAudio = () => {
+      audioRef.current.play().then(() => {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }).catch(() => { });
+
+      document.removeEventListener("click", unlockAudio);
+      document.removeEventListener("keydown", unlockAudio);
+    };
+
+    document.addEventListener("click", unlockAudio);
+    document.addEventListener("keydown", unlockAudio);
+  }, []);
+
+  useEffect(() => {
     if (alerts.length === 0) return;
 
     const timeout = setTimeout(() => {
       setAlerts([]);
-    }, 15000);
+    }, 35000);
 
     return () => clearTimeout(timeout);
+  }, [alerts]);
+
+  useEffect(() => {
+    if (alerts.length > 0 && audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => { });
+    }
   }, [alerts]);
 
   return (
