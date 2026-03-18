@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Alerts.css";
 
-const ALERTS_URL = "http://localhost:4000/api/alerts";
+const ALERTS_URL = "https://lobby-display-sh6g.onrender.com/api/alerts";
 
 const Alerts = () => {
   const [alerts, setAlerts] = useState([]);
