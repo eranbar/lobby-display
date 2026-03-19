@@ -25,53 +25,61 @@ mongoose.connect(process.env.MONGO_URI)
 let cachedAlerts = [];
 let lastAlertId = null;
 
-const fetchAlerts = async () => {
-  try {
-    const response = await axios.get(
-      "https://www.oref.org.il/warningMessages/alert/alerts.json",
-      {
-        headers: {
-          "User-Agent": "Mozilla/5.0",
-          "Referer": "https://www.oref.org.il/",
-          "Accept": "application/json, text/plain, */*",
-          "Accept-Language": "he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7",
-          "Connection": "keep-alive"
-        },
-        timeout: 5000
-      }
-    );
-
-    const data = response.data;
-
-    if (data?.data && data.data.length > 0) {
-      if (data.id !== lastAlertId) {
-        lastAlertId = data.id;
-
-        cachedAlerts = [{
-          title: data.title,
-          areas: data.data,
-          time: new Date()
-        }];
-
-        console.log("🚨 New Alert:", cachedAlerts);
-      }
-    } else {
-      // ✅ CLEAR when no alerts
-      cachedAlerts = [];
-      lastAlertId = null;
+app.get("/api/alerts", (req, res) => {
+  res.json([
+    {
+      title: "🚨 צבע אדום",
+      areas: ["נהריה", "עכו"]
     }
+  ]);
+});
+//const fetchAlerts = async () => {
+  //try {
+  //  const response = await axios.get(
+      //"https://www.oref.org.il/warningMessages/alert/alerts.json",
+      //{
+      //  headers: {
+       //   "User-Agent": "Mozilla/5.0",
+        //  "Referer": "https://www.oref.org.il/",
+        //  "Accept": "application/json, text/plain, */*",
+       //   "Accept-Language": "he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7",
+      //    "Connection": "keep-alive"
+      //  },
+      //  timeout: 5000
+     // }
+   // );
 
-  } catch (err) {
-    console.log("Polling failed:", err.message);
-  }
-};
+  //  const data = response.data;
+
+   // if (data?.data && data.data.length > 0) {
+    //  if (data.id !== lastAlertId) {
+     //   lastAlertId = data.id;
+
+     //   cachedAlerts = [{
+      //    title: data.title,
+     //     areas: data.data,
+    //      time: new Date()
+   //     }];
+
+  //      console.log("🚨 New Alert:", cachedAlerts);
+   //   }
+ //   } else {
+      // ✅ CLEAR when no alerts
+  //    cachedAlerts = [];
+  //    lastAlertId = null;
+  //  }
+
+ // } catch (err) {
+  //  console.log("Polling failed:", err.message);
+  //}
+//};
 
 // ✅ ONE interval only
-setInterval(fetchAlerts, 2000);
+//setInterval(fetchAlerts, 2000);
 
-app.get("/api/alerts", (req, res) => {
-  res.json(cachedAlerts);
-});
+//app.get("/api/alerts", (req, res) => {
+ // res.json(cachedAlerts);
+//});
 
 
 let cachedNews = [];
