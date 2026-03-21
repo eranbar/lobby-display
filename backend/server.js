@@ -33,40 +33,67 @@ let lastAlertId = null;
 //    }
  // ]);
 //});
+//const fetchAlerts = async () => {
+ // try {
+   // const response = await axios.get(
+    //  "https://www.oref.org.il/warningMessages/alert/alerts.json",
+    //  {
+      //  headers: {
+     //     "User-Agent": "Mozilla/5.0",
+     //     "Referer": "https://www.oref.org.il/",
+    //      "Accept": "application/json, text/plain, */*",
+    //      "Accept-Language": "he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7",
+    //      "Connection": "keep-alive"
+     //   },
+     //   timeout: 5000
+    //  }
+   // );
+
+   // const data = response.data;
+
+  //  if (data?.data && data.data.length > 0) {
+   //   if (data.id !== lastAlertId) {
+   //     lastAlertId = data.id;
+
+  //      cachedAlerts = [{
+ //         title: data.title,
+ //         areas: data.data,
+  //        time: new Date()
+//        }];
+
+//        console.log("🚨 New Alert:", cachedAlerts);
+//      }
+//    } else {
+      // ✅ CLEAR when no alerts
+ //     cachedAlerts = [];
+//      lastAlertId = null;
+//    }
+
+//  } catch (err) {
+//    console.log("Polling failed:", err.message);
+//  }
+//};
+
+// ✅ ONE interval only
+//setInterval(fetchAlerts, 2000);
 const fetchAlerts = async () => {
   try {
     const response = await axios.get(
-      "https://www.oref.org.il/warningMessages/alert/alerts.json",
-      {
-        headers: {
-          "User-Agent": "Mozilla/5.0",
-          "Referer": "https://www.oref.org.il/",
-          "Accept": "application/json, text/plain, */*",
-          "Accept-Language": "he-IL,he;q=0.9,en-US;q=0.8,en;q=0.7",
-          "Connection": "keep-alive"
-        },
-        timeout: 5000
-      }
+      "https://api.allorigins.win/raw?url=https://www.oref.org.il/warningMessages/alert/alerts.json"
     );
 
     const data = response.data;
 
-    if (data?.data && data.data.length > 0) {
-      if (data.id !== lastAlertId) {
-        lastAlertId = data.id;
+    if (data?.data?.length > 0 && data.id !== lastAlertId) {
+      lastAlertId = data.id;
 
-        cachedAlerts = [{
-          title: data.title,
-          areas: data.data,
-          time: new Date()
-        }];
+      cachedAlerts = [{
+        title: data.title,
+        areas: data.data,
+        time: new Date()
+      }];
 
-        console.log("🚨 New Alert:", cachedAlerts);
-      }
-    } else {
-      // ✅ CLEAR when no alerts
-      cachedAlerts = [];
-      lastAlertId = null;
+      console.log("🚨 New Alert:", cachedAlerts);
     }
 
   } catch (err) {
@@ -74,8 +101,7 @@ const fetchAlerts = async () => {
   }
 };
 
-// ✅ ONE interval only
-setInterval(fetchAlerts, 2000);
+setInterval(fetchAlerts, 5000);
 
 app.get("/api/alerts", (req, res) => {
   res.json(cachedAlerts);
