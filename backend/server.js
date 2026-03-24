@@ -76,7 +76,7 @@ let lastAlertId = null;
 
 // ✅ ONE interval only
 //setInterval(fetchAlerts, 2000);
-const fetchAlerts = async () => {
+/* const fetchAlerts = async () => {
   try {
     const response = await axios.get(
       "https://api.allorigins.win/raw?url=https://www.oref.org.il/warningMessages/alert/alerts.json"
@@ -105,7 +105,7 @@ setInterval(fetchAlerts, 5000);
 
 app.get("/api/alerts", (req, res) => {
   res.json(cachedAlerts);
-});
+}); */
 
 
 let cachedNews = [];

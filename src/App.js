@@ -63,7 +63,7 @@ const App = (props) => {
   // App.js (only the render part shown; keep your existing fetch/useEffect logic)
   return (
     <div className="app-root">
-      <Alerts />
+      {/* <Alerts /> */}
       <header className="topbar">
         <div className="topbar-left">
           <Weather refreshTick={refreshTick} />
