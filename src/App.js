@@ -6,7 +6,7 @@ import Weather from "./Weather/Weather";
 import Messages from "./Messages/Messages";
 import News from "./News/News";
 import "./News/News.css";
-import Alerts from "./Alerts/Alerts";
+//import Alerts from "./Alerts/Alerts";
 
 const App = (props) => {
   const [refreshTick, setRefreshTick] = useState(0);
